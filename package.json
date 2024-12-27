@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:push":"drizzle-kit push",
-    "db:studio":"drizzle-kit studio"
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.3.4",
@@ -21,6 +21,7 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",
     "lucide-react": "^0.460.0",
+    "moment": "^2.30.1",
     "next": "15.0.3",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",

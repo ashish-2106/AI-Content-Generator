@@ -9,6 +9,10 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { chatSession } from "@/utils/AiModal";
+import { db } from "@/utils/db";
+import { AIOutput } from "@/utils/schema";
+import { useUser } from "@clerk/nextjs";
+import moment from "moment";
 
 interface PROPS {
   params: Promise<{
@@ -19,7 +23,7 @@ interface PROPS {
 function CreateNewContent({ params }: PROPS) {
   const [selectedTemplate, setSelectedTemplate] = useState<TEMPLATE | undefined>(undefined);
   const [templateSlug, setTemplateSlug] = useState<string | null>(null);
-
+  const{user}=useUser();
   useEffect(() => {
     // Resolve the params promise and set the template slug
     params.then((resolvedParams) => {
@@ -40,15 +44,34 @@ function CreateNewContent({ params }: PROPS) {
     setLoading(true);
     const selectedPrompt = selectedTemplate?.aiPrompt;
     const FinalAIPrompt = JSON.stringify(formData) + "," + selectedPrompt;
-    const result = await chatSession.sendMessage(FinalAIPrompt)
-    console.log(result.response.text());
+    const result = await chatSession.sendMessage(FinalAIPrompt);
+    console.log(result?.response.text());
     setAiOutput(result?.response.text());
+    await SaveInDb(formData,selectedTemplate?.slug,result?.response.text());
     setLoading(false);
   };
 
-  if (!templateSlug) {
-    return <p>Loading...</p>; // Show a loading state while params are resolving
-  }
+ 
+  const SaveInDb = async (formData: any, slug: any, aiResp: string) => {
+    try {
+      const createdAt = moment().format('YYYY-MM-DD HH:mm:ss'); // Use correct timestamp format
+      console.log("Saving to DB with createdAt:", createdAt);
+  
+      const result = await db.insert(AIOutput).values({
+        formData: formData,
+        templateSlug: slug,
+        aiResponse: aiResp,
+        createdBy: user?.primaryEmailAddress?.emailAddress,
+        createdAt: createdAt, 
+      });
+  
+      console.log(result);
+    } catch (error) {
+      console.error("Error saving to DB:", error);
+    }
+  };
+  
+
 
   return (
     <div className="p-10">
