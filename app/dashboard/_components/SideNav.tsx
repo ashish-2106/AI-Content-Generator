@@ -2,6 +2,8 @@
 import { History, HistoryIcon, Home, Settings, Wallet } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
+import Link from 'next/link';
+import { link } from 'node:fs';
 
 function SideNav() {
     const MenuList = [
@@ -42,7 +44,8 @@ function SideNav() {
             <div className='mt-3'>
                 {
                     MenuList.map((menu, index) => (
-                        <div  key={menu.path}
+                        <Link key={menu.path} href={menu.path}>
+                        <div  
                             className={`flex gap-2 mb-2 p-3 hover:bg-primary hover:text-white rounded-lg cursor-pointer 
                                 items-center 
                                 ${path === menu.path ? 'bg-primary text-white' : ''}`}
@@ -50,6 +53,7 @@ function SideNav() {
                             <menu.icon className='h-7 w-6' />
                             <h2 className='text-lg'>{menu.name}</h2>
                         </div>
+                        </Link>
                     ))
 
                 }

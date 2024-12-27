@@ -5,8 +5,8 @@ function Settings() {
   
   return (
     
-    <div>
-      <UserProfile routing="path" path="/dashboard/settings" />
+    <div className='flex items-center justify-center h-full'>
+      <UserProfile />
     </div>
   );
 }
