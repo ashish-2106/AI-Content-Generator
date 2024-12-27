@@ -21,7 +21,24 @@ function OutputSection( {aiOutput} : PROPS) {
     <div className='bg-white shadow-lg border rounded'>
       <div className='flex justify-between items-center p-5'>
         <h1 className='font-medium text-lg'>Your Result</h1>
-        <Button className=' flex gap-2'><Copy />Copy</Button>
+        <Button
+  className="flex gap-2"
+  onClick={() => {
+    if (aiOutput) {
+      navigator.clipboard.writeText(aiOutput)
+        .then(() => {
+          console.log("Text copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
+    } else {
+      console.warn("No text to copy!");
+    }
+  }}
+>
+  <Copy /> Copy
+</Button>
       </div>
       
       <Editor
