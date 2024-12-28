@@ -1,9 +1,9 @@
 "use client";
-import { History, HistoryIcon, Home, Settings, Wallet } from 'lucide-react'
-import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
-import Link from 'next/link';
-import { link } from 'node:fs';
+import { HistoryIcon, Home, Settings, Wallet } from "lucide-react";
+import { usePathname } from "next/navigation";
+import React, { useEffect } from "react";
+import Link from "next/link";
+import UsageTrack from "./UsageTrack";
 
 function SideNav() {
     const MenuList = [
@@ -25,7 +25,7 @@ function SideNav() {
         {
             name: 'Settings',
             icon: Settings,
-            path: '/dashboard/settings'
+            path: '/dashboard/setting'
         },
     ]
 
@@ -36,7 +36,7 @@ function SideNav() {
     }, [path]);
 
     return (
-        <div className='h-screen p-4 shadow-sm border bg-white'>
+        <div className='h-screen relative p-3 shadow-sm border bg-white'>
             <div className='flex justify-center'>
                 <img src="/logo.svg" alt="logo" width={120} height={100} />
             </div>
@@ -57,6 +57,9 @@ function SideNav() {
                     ))
 
                 }
+            </div>
+            <div className='absolute bottom-0 left-0 w-full'>
+                <UsageTrack/>
             </div>
         </div>
     )
