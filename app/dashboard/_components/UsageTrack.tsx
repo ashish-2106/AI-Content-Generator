@@ -12,7 +12,7 @@ function UsageTrack() {
                 </div>
                 <h2 className='text-sm my-2'>500/10000 Credits Used</h2>
             </div>
-            <button className='bg-secondary w-full p-2 my-3 rounded-lg'>Upgrade</button>
+            <button className='bg-secondary w-full p-2 my-3 rounded-lg text-[#251467]'>Upgrade</button>
         </div>
     )
 }
