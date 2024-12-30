@@ -8,7 +8,7 @@ import Link from 'next/link'; // Use Next.js Link instead of lucide-react
 function TemplateCard({ name, desc, icon, slug }: TEMPLATE) {
   return (
     <Link href={`/dashboard/content/${slug}`}>
-      <div className="p-3 shadow-md rounded-md border bg-white
+      <div className="p-2 shadow-md rounded-md border bg-white
       flex flex-col gap-3 cursor-pointer hover:scale-105 transition-all">
         <Image
           src={icon}
