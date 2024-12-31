@@ -347,7 +347,41 @@ export default  [
            
         ]
     },
-
+    {
+        "name": "Workout Plan Generator",
+        "desc": "Create a personalized workout plan tailored to your fitness goals, preferred exercises, and available equipment.",
+        "category": "Fitness & Health",
+        "icon": "https://cdn-icons-png.flaticon.com/128/2965/2965336.png",
+        "slug": "workout-plan-generator",
+        "aiPrompt": "Generate a weekly workout plan for the user based on their fitness goal, preferred workout duration, available equipment, and days per week for workouts.",
+        "form": [
+            {
+                label: "Select Your Fitness Goal",
+                field: "select",
+                name: "fitnessGoal",
+                required: true
+            },
+            {
+                label: "Enter Preferred Workout Duration (in minutes)",
+                field: "number",
+                name: "workoutDuration",
+                required: true
+            },
+            {
+                label: "Select Available Equipment",
+                field: "checkbox",
+                name: "availableEquipment",
+                required: false
+            },
+            {
+                label: "Enter Days per Week for Workouts",
+                field: "number",
+                name: "daysPerWeek",
+                required: true
+            }
+        ]
+    },
+    
 
 
 ]
