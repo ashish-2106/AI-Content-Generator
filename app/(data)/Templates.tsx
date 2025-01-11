@@ -347,33 +347,5 @@ export default  [
            
         ]
     },
-    {
-        name: 'Product Description',
-        desc: 'This is your AI-powered SEO expert, creating captivating and keyword-rich e-commerce product descriptions to boost your online sales.',
-        icon:'https://cdn-icons-png.flaticon.com/128/679/679922.png',
-        category: 'Marketting',
-       
-        slug: 'product-description',
-        aiPrompt: 'Depends on user productName and description generate small description for product for e-commer business give output  in rich text editor format  ',
-        form: [
-            {
-                label: 'Product Name',
-                field: 'input',
-                name: 'productName',
-                required:true
-            },
-            {
-                label: 'Product Details',
-                field: 'textarea',
-                name: 'outline',
-                required:true
-            },
-           
-        ]
-    },
-
-
-    
-
 ]
   
