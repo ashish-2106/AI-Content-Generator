@@ -1,77 +1,63 @@
-"use client"
-import { useEffect, useState } from "react";
-import { db } from "@/utils/db";
-import { AIOutput } from "@/utils/schema";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+"use client";
 
-interface AIOutputItem {
+
+import { useEffect, useState } from "react";
+
+interface HistoryItem {
   id: number;
   formData: string;
-  templateSlug: string;
   aiResponse: string;
+  templateSlug: string;
   createdBy: string;
   createdAt: string;
 }
 
-const HistoryPage = () => {
-  const [history, setHistory] = useState<AIOutputItem[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function HistoryPage() {
+  const [history, setHistory] = useState<HistoryItem[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/NEXT_PUBLIC_DRIZZLE_DB_URL/history"); // API route to fetch history data
-        const data = await response.json();
-        setHistory(data);
-      } catch (error) {
-        console.error("Error fetching history:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetch("/api/history") // ✅ Ensure this matches your API route
+      .then((res) => res.json())
+      .then((data) => setHistory(data))
+      .catch((err) => console.error("Error fetching history:", err));
   }, []);
 
   return (
-    <div className="p-6" >
-      <Link href="/dashboard">
-        <Button><ArrowLeft/>Back</Button>
-      </Link>
-      <div className="bg-white  mt-4 p-4">
-      <h1 className="text-2xl font-bold ">History</h1>
-      <p className='text-sm text-gray-600 mt-1 mb-3 '>Search your Previously generated AI content</p>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">AI Output History</h1>
+      {history.length === 0 ? (
+        <p>No history found.</p>
+      ) : (
+        <ul className="space-y-4">
+          {history.map((item) => (
+            
 
-
-      
-        <table className="w-full table-auto border-collapse border border-gray-300 mt-4">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2">Template Slug</th>
-              <th className="border px-4 py-2">Form Data</th>
-              <th className="border px-4 py-2">AI Response</th>
-              <th className="border px-4 py-2">Created By</th>
-              <th className="border px-4 py-2">Created At</th>
-            </tr>
-          </thead>
-          <tbody>
-            {history.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50">
-                <td className="border px-4 py-2">{item.templateSlug}</td>
-                <td className="border px-4 py-2">{item.formData}</td>
-                <td className="border px-4 py-2 truncate max-w-xs">{item.aiResponse}</td>
-                <td className="border px-4 py-2">{item.createdBy}</td>
-                <td className="border px-4 py-2">{item.createdAt}</td>
+            <table className="w-full border-separate border-spacing-0">
+            <thead>
+              <tr>
+                <th className="border-t border-b border-l px-4 py-2 text-left">Form Data</th>
+                <th className="border-t border-b border-l px-4 py-2 text-left">AI Response</th>
+                <th className="border-t border-b border-l px-4 py-2 text-left">Template Slug</th>
+                <th className="border-t border-b border-l px-4 py-2 text-left">Created By</th>
+                <th className="border-t border-b border-l px-4 py-2 text-left">Created At</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      
-      </div>
+            </thead>
+            <tbody>
+              <tr key={item.id}>
+                <td className="border-b border-l px-4 py-2">{item.formData}</td>
+                <td className="border-b border-l px-4 py-2">{item.aiResponse}</td>
+                <td className="border-b border-l px-4 py-2">{item.templateSlug}</td>
+                <td className="border-b border-l px-4 py-2">{item.createdBy}</td>
+                <td className="border-b border-l px-4 py-2">{new Date(item.createdAt).toLocaleString()}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+
+            
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
-
-export default HistoryPage;
+}
